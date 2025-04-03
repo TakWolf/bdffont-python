@@ -389,5 +389,5 @@ class BdfFont:
         return stream.getvalue()
 
     def save(self, file_path: str | PathLike[str]):
-        with open(file_path, 'w', encoding='utf-8') as file:
+        with open(file_path, 'w', encoding='utf-8', newline='\n') as file:
             self.dump(file)

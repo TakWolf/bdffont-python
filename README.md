@@ -17,6 +17,7 @@ pip install bdffont
 
 ```python
 import shutil
+import statistics
 
 from bdffont import BdfFont, BdfGlyph
 from examples import build_dir
@@ -71,7 +72,7 @@ def main():
     font.properties.resolution_x = font.resolution_x
     font.properties.resolution_y = font.resolution_y
     font.properties.spacing = 'P'
-    font.properties.average_width = round(sum([glyph.device_width_x * 10 for glyph in font.glyphs]) / len(font.glyphs))
+    font.properties.average_width = round(statistics.fmean(glyph.device_width_x * 10 for glyph in font.glyphs))
     font.properties.charset_registry = 'ISO10646'
     font.properties.charset_encoding = '1'
     font.generate_name_as_xlfd()

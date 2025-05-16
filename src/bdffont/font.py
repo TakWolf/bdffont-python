@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import math
 import re
 from collections.abc import Iterator
@@ -132,7 +134,7 @@ def _parse_glyph_segment(lines: Iterator[tuple[str, str]], name: str) -> BdfGlyp
     raise BdfMissingWordError(_WORD_ENDCHAR)
 
 
-def _parse_font_segment(lines: Iterator[tuple[str, str]]) -> 'BdfFont':
+def _parse_font_segment(lines: Iterator[tuple[str, str]]) -> BdfFont:
     name = None
     point_size = None
     resolution = None
@@ -184,7 +186,7 @@ def _parse_font_segment(lines: Iterator[tuple[str, str]]) -> 'BdfFont':
     raise BdfMissingWordError(_WORD_ENDFONT)
 
 
-def _parse_stream(stream: TextIO) -> 'BdfFont':
+def _parse_stream(stream: TextIO) -> BdfFont:
     lines = _create_lines_iterator(stream)
     for word, tail in lines:
         if word == _WORD_STARTFONT:
@@ -223,7 +225,7 @@ def _dump_properties_line(stream: TextIO, key: str, value: str | int):
     stream.write(f'{key} {value}\n')
 
 
-def _dump_stream(stream: TextIO, font: 'BdfFont'):
+def _dump_stream(stream: TextIO, font: BdfFont):
     _dump_word_str_line(stream, _WORD_STARTFONT, _SPEC_VERSION)
     for comment in font.comments:
         _dump_word_str_line(stream, _WORD_COMMENT, comment)
@@ -267,13 +269,13 @@ def _dump_stream(stream: TextIO, font: 'BdfFont'):
 
 class BdfFont:
     @staticmethod
-    def parse(stream: str | TextIO) -> 'BdfFont':
+    def parse(stream: str | TextIO) -> BdfFont:
         if isinstance(stream, str):
             stream = StringIO(stream)
         return _parse_stream(stream)
 
     @staticmethod
-    def load(file_path: str | PathLike[str]) -> 'BdfFont':
+    def load(file_path: str | PathLike[str]) -> BdfFont:
         with open(file_path, 'r', encoding='utf-8') as file:
             return BdfFont.parse(file)
 

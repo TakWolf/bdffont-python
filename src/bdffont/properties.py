@@ -150,7 +150,7 @@ class BdfProperties(UserDict[str, str | int]):
 
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, BdfProperties):
-            return False
+            return NotImplemented
         return (self.comments == other.comments and
                 super().__eq__(other))
 

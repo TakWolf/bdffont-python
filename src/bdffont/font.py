@@ -329,7 +329,7 @@ class BdfFont:
 
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, BdfFont):
-            return False
+            return NotImplemented
         return (self.name == other.name and
                 self.point_size == other.point_size and
                 self.resolution_x == other.resolution_x and

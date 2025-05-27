@@ -66,7 +66,7 @@ class BdfGlyph:
 
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, BdfGlyph):
-            return False
+            return NotImplemented
         return (self.name == other.name and
                 self.encoding == other.encoding and
                 self.scalable_width_x == other.scalable_width_x and

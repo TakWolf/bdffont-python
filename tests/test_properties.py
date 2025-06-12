@@ -160,7 +160,15 @@ def test_properties_5():
     assert properties.cap_height == 8
     assert properties['CAP_HEIGHT'] == 8
 
-    assert len(properties) == 5
+    properties.underline_position = -2
+    assert properties.underline_position == -2
+    assert properties['UNDERLINE_POSITION'] == -2
+
+    properties.underline_thickness = 1
+    assert properties.underline_thickness == 1
+    assert properties['UNDERLINE_THICKNESS'] == 1
+
+    assert len(properties) == 7
 
 
 def test_properties_6():

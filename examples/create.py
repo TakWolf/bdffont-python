@@ -64,6 +64,8 @@ def main():
     font.properties.font_descent = 2
     font.properties.x_height = 7
     font.properties.cap_height = 10
+    font.properties.underline_position = -2
+    font.properties.underline_thickness = 1
 
     font.properties.font_version = '1.0.0'
     font.properties.copyright = 'Copyright (c) TakWolf'

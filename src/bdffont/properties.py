@@ -22,8 +22,10 @@ _KEY_CHARSET_ENCODING = 'CHARSET_ENCODING'
 _KEY_DEFAULT_CHAR = 'DEFAULT_CHAR'
 _KEY_FONT_ASCENT = 'FONT_ASCENT'
 _KEY_FONT_DESCENT = 'FONT_DESCENT'
-_KEY_CAP_HEIGHT = 'CAP_HEIGHT'
 _KEY_X_HEIGHT = 'X_HEIGHT'
+_KEY_CAP_HEIGHT = 'CAP_HEIGHT'
+_KEY_UNDERLINE_POSITION = 'UNDERLINE_POSITION'
+_KEY_UNDERLINE_THICKNESS = 'UNDERLINE_THICKNESS'
 
 _KEY_FONT_VERSION = 'FONT_VERSION'
 _KEY_COPYRIGHT = 'COPYRIGHT'
@@ -53,8 +55,10 @@ _INT_VALUE_KEYS = {
     _KEY_DEFAULT_CHAR,
     _KEY_FONT_ASCENT,
     _KEY_FONT_DESCENT,
-    _KEY_CAP_HEIGHT,
     _KEY_X_HEIGHT,
+    _KEY_CAP_HEIGHT,
+    _KEY_UNDERLINE_POSITION,
+    _KEY_UNDERLINE_THICKNESS,
 }
 
 _XLFD_STR_VALUE_KEYS = {
@@ -305,6 +309,22 @@ class BdfProperties(UserDict[str, str | int]):
     @cap_height.setter
     def cap_height(self, value: int | None):
         self[_KEY_CAP_HEIGHT] = value
+
+    @property
+    def underline_position(self) -> int | None:
+        return self.get(_KEY_UNDERLINE_POSITION, None)
+
+    @underline_position.setter
+    def underline_position(self, value: int | None):
+        self[_KEY_UNDERLINE_POSITION] = value
+
+    @property
+    def underline_thickness(self) -> int | None:
+        return self.get(_KEY_UNDERLINE_THICKNESS, None)
+
+    @underline_thickness.setter
+    def underline_thickness(self, value: int | None):
+        self[_KEY_UNDERLINE_THICKNESS] = value
 
     @property
     def font_version(self) -> str | None:

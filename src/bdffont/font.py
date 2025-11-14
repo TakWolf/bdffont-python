@@ -30,15 +30,22 @@ _WORD_DWIDTH = 'DWIDTH'
 _WORD_BBX = 'BBX'
 _WORD_BITMAP = 'BITMAP'
 
+_COMMENT_LINE_PREFIX = f'{_WORD_COMMENT} '
+
 
 def _create_lines_iterator(stream: TextIO) -> Iterator[tuple[str, str]]:
     for line in stream:
         line = line.strip()
         if line == '':
             continue
-        tokens = re.split(r' +', line, 1)
-        word = tokens[0]
-        tail = tokens[1] if len(tokens) >= 2 else ''
+
+        if line.startswith(_COMMENT_LINE_PREFIX):
+            word = _WORD_COMMENT
+            tail = line.removeprefix(_COMMENT_LINE_PREFIX)
+        else:
+            tokens = re.split(r' +', line, 1)
+            word = tokens[0]
+            tail = tokens[1] if len(tokens) >= 2 else ''
         yield word, tail
 
 

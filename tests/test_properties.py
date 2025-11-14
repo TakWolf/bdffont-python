@@ -214,7 +214,3 @@ def test_properties_7():
     with pytest.raises(ValueError) as info:
         properties['FLOAT_PARAM'] = 1.2
     assert info.value.args[0] == "expected type 'str | int', got 'float' instead"
-
-    with pytest.raises(ValueError) as info:
-        properties.family_name = 'Demo-Pixel'
-    assert info.value.args[0] == "contains illegal characters '-'"

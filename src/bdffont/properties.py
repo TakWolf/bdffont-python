@@ -91,6 +91,12 @@ _XLFD_KEYS_ORDER = [
 ]
 
 
+def _check_xlfd_str_value(key: str, value: str):
+    matched = re.search(r'[-?*,"]', value)
+    if matched is not None:
+        raise ValueError(f'value of {repr(key)} contains illegal characters {repr(matched.group())}')
+
+
 class BdfProperties(UserDict[str, str | int]):
     comments: list[str]
 
@@ -134,11 +140,6 @@ class BdfProperties(UserDict[str, str | int]):
         else:
             if not isinstance(value, str) and not isinstance(value, int):
                 raise ValueError(f"expected type 'str | int', got '{type(value).__name__}' instead")
-
-        if key in _XLFD_STR_VALUE_KEYS:
-            matched = re.search(r'[-?*,"]', value)
-            if matched is not None:
-                raise ValueError(f'contains illegal characters {repr(matched.group())}')
 
         super().__setitem__(key, value)
 
@@ -353,7 +354,10 @@ class BdfProperties(UserDict[str, str | int]):
     def to_xlfd(self) -> str:
         tokens = ['']
         for key in _XLFD_KEYS_ORDER:
-            tokens.append(str(self.get(key, '')))
+            value = str(self.get(key, ''))
+            if key in _XLFD_STR_VALUE_KEYS:
+                _check_xlfd_str_value(key, value)
+            tokens.append(value)
         return '-'.join(tokens)
 
     def update_by_xlfd(self, font_name: str):
@@ -367,6 +371,7 @@ class BdfProperties(UserDict[str, str | int]):
                 value = None
             else:
                 if key in _XLFD_STR_VALUE_KEYS:
+                    _check_xlfd_str_value(key, token)
                     value = token
                 else:
                     value = int(token)

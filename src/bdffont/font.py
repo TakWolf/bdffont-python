@@ -69,7 +69,11 @@ def _parse_properties_segment(lines: Iterator[tuple[str, str]], count: int) -> B
         elif word == _WORD_COMMENT:
             properties.comments.append(tail)
         else:
-            properties[word] = _convert_tail_to_properties_value(tail)
+            value = _convert_tail_to_properties_value(tail)
+            try:
+                properties[word] = value
+            except ValueError:
+                properties[word] = str(value)
     raise BdfMissingWordError(_WORD_ENDPROPERTIES)
 
 

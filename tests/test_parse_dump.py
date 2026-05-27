@@ -1,3 +1,4 @@
+import textwrap
 from pathlib import Path
 
 import pytest
@@ -103,3 +104,111 @@ def test_multi_line():
     with pytest.raises(BdfDumpError) as info:
         font.dump_to_string()
     assert info.value.args[0] == 'tail cannot be multi-line string'
+
+
+def test_parse_bitmap_1():
+    font = BdfFont.parse(textwrap.dedent('''\
+        STARTFONT 2.1
+        FONT
+        SIZE 0 0 0
+        FONTBOUNDINGBOX 0 0 0 0
+        STARTPROPERTIES 0
+        ENDPROPERTIES
+        CHARS 1
+        STARTCHAR _
+        ENCODING 0
+        SWIDTH 0 0
+        DWIDTH 0 0
+        BBX 10 1 0 0
+        BITMAP
+        FF
+        ENDCHAR
+        ENDFONT
+    '''))
+    assert font.glyphs[0].bitmap == [
+        [1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    ]
+
+
+def test_parse_bitmap_2():
+    font = BdfFont.parse(textwrap.dedent('''\
+        STARTFONT 2.1
+        FONT
+        SIZE 0 0 0
+        FONTBOUNDINGBOX 0 0 0 0
+        STARTPROPERTIES 0
+        ENDPROPERTIES
+        CHARS 1
+        STARTCHAR _
+        ENCODING 0
+        SWIDTH 0 0
+        DWIDTH 0 0
+        BBX 6 1 0 0
+        BITMAP
+        FF
+        ENDCHAR
+        ENDFONT
+    '''))
+    assert font.glyphs[0].bitmap == [
+        [1, 1, 1, 1, 1, 1],
+    ]
+
+
+def test_dump_bitmap_1():
+    font = BdfFont()
+    font.glyphs.append(BdfGlyph(
+        name='_',
+        encoding=0,
+        bounding_box=(10, 1, 0, 0),
+        bitmap=[
+            [2, 2, 2, 2, 2, 2],
+        ],
+    ))
+    assert font.dump_to_string() == textwrap.dedent('''\
+        STARTFONT 2.1
+        FONT
+        SIZE 0 0 0
+        FONTBOUNDINGBOX 0 0 0 0
+        STARTPROPERTIES 0
+        ENDPROPERTIES
+        CHARS 1
+        STARTCHAR _
+        ENCODING 0
+        SWIDTH 0 0
+        DWIDTH 0 0
+        BBX 10 1 0 0
+        BITMAP
+        FC00
+        ENDCHAR
+        ENDFONT
+    ''')
+
+
+def test_dump_bitmap_2():
+    font = BdfFont()
+    font.glyphs.append(BdfGlyph(
+        name='_',
+        encoding=0,
+        bounding_box=(6, 1, 0, 0),
+        bitmap=[
+            [2, 2, 2, 2, 2, 2, 2, 2],
+        ],
+    ))
+    assert font.dump_to_string() == textwrap.dedent('''\
+        STARTFONT 2.1
+        FONT
+        SIZE 0 0 0
+        FONTBOUNDINGBOX 0 0 0 0
+        STARTPROPERTIES 0
+        ENDPROPERTIES
+        CHARS 1
+        STARTCHAR _
+        ENCODING 0
+        SWIDTH 0 0
+        DWIDTH 0 0
+        BBX 6 1 0 0
+        BITMAP
+        FC
+        ENDCHAR
+        ENDFONT
+    ''')

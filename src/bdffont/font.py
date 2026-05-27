@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import math
 from collections.abc import Iterator
 from io import StringIO
 from os import PathLike
@@ -82,16 +81,19 @@ def _parse_properties_segment(lines: Iterator[tuple[str, str]], count: int) -> B
     raise BdfMissingWordError(_WORD_ENDPROPERTIES)
 
 
-def _parse_bitmap_segment(lines: Iterator[tuple[str, str]]) -> list[list[int]]:
+def _parse_bitmap_segment(lines: Iterator[tuple[str, str]], glyph_width: int) -> list[list[int]]:
     bitmap = []
     for word, _ in lines:
         if word == _WORD_ENDCHAR:
             return bitmap
         else:
-            bin_format = '{:0' + str(len(word) * 4) + 'b}'
-            bin_string = bin_format.format(int(word, 16))
-            bitmap_row = [int(c) for c in bin_string]
-            bitmap.append(bitmap_row)
+            value = int(word, 16)
+            bitmap_width = len(word) * 4
+            bitmap.append([
+                (value >> (bitmap_width - 1 - i)) & 1
+                if i < bitmap_width else 0
+                for i in range(glyph_width)
+            ])
     raise BdfMissingWordError(_WORD_ENDCHAR)
 
 
@@ -125,8 +127,7 @@ def _parse_glyph_segment(lines: Iterator[tuple[str, str]], name: str) -> BdfGlyp
             if bounding_box is None:
                 raise BdfMissingWordError(_WORD_BBX)
             if word == _WORD_BITMAP:
-                bitmap = _parse_bitmap_segment(lines)
-                bitmap = [bitmap_row[:bounding_box[0]] for bitmap_row in bitmap]
+                bitmap = _parse_bitmap_segment(lines, bounding_box[0])
             else:
                 bitmap = None
             return BdfGlyph(
@@ -260,16 +261,16 @@ def _dump_stream(stream: TextIO, font: BdfFont):
         _dump_word_ints_line(stream, _WORD_BBX, glyph.width, glyph.height, glyph.offset_x, glyph.offset_y)
         _dump_word_str_line(stream, _WORD_BITMAP)
 
-        bitmap_width = math.ceil(glyph.width / 8) * 8
+        bitmap_width = (glyph.width + 7) // 8 * 8
         for bitmap_row in glyph.bitmap:
-            if len(bitmap_row) < bitmap_width:
-                bitmap_row = bitmap_row + [0] * (bitmap_width - len(bitmap_row))
-            elif len(bitmap_row) > bitmap_width:
-                bitmap_row = bitmap_row[:bitmap_width]
-            bin_string = ''.join(map(str, bitmap_row))
-            hex_format = '{:0' + str(len(bitmap_row) // 4) + 'X}'
-            hex_value = hex_format.format(int(bin_string, 2))
-            stream.write(f'{hex_value}\n')
+            for i in range(0, bitmap_width, 8):
+                b = 0
+                for shift in range(8):
+                    pixel_index = i + shift
+                    pixel = 1 if pixel_index < min(len(bitmap_row), glyph.width) and bitmap_row[pixel_index] != 0 else 0
+                    b = (b << 1) | pixel
+                stream.write(f'{b:02X}')
+            stream.write('\n')
 
         _dump_word_str_line(stream, _WORD_ENDCHAR)
 

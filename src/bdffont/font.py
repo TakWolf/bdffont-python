@@ -56,13 +56,12 @@ def _convert_tail_to_ints(tail: str) -> list[int]:
 
 def _convert_tail_to_properties_value(tail: str) -> str | int:
     if tail.startswith('"') and tail.endswith('"'):
-        value = tail.removeprefix('"').removesuffix('"').replace('""', '"')
-    else:
-        try:
-            value = int(tail)
-        except ValueError:
-            value = tail
-    return value
+        return tail[1:-1].replace('""', '"')
+
+    try:
+        return int(tail)
+    except ValueError:
+        return tail
 
 
 def _parse_properties_segment(lines: Iterator[tuple[str, str]], count: int) -> BdfProperties:

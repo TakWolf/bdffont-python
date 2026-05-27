@@ -352,27 +352,27 @@ class BdfProperties(UserDict[str, str | int]):
         self[_KEY_NOTICE] = value
 
     def to_xlfd(self) -> str:
-        tokens = ['']
+        parts = ['']
         for key in _XLFD_KEYS_ORDER:
             value = str(self.get(key, ''))
             if key in _XLFD_STR_VALUE_KEYS:
                 _check_xlfd_str_value(key, value)
-            tokens.append(value)
-        return '-'.join(tokens)
+            parts.append(value)
+        return '-'.join(parts)
 
     def update_by_xlfd(self, font_name: str):
         if not font_name.startswith('-'):
             raise BdfXlfdError("not starts with '-'")
         if font_name.count('-') != 14:
             raise BdfXlfdError("must be 14 '-'")
-        tokens = font_name.removeprefix('-').split('-')
-        for key, token in zip(_XLFD_KEYS_ORDER, tokens):
-            if token == '':
+        parts = font_name.removeprefix('-').split('-')
+        for key, part in zip(_XLFD_KEYS_ORDER, parts):
+            if part == '':
                 value = None
             else:
                 if key in _XLFD_STR_VALUE_KEYS:
-                    _check_xlfd_str_value(key, token)
-                    value = token
+                    _check_xlfd_str_value(key, part)
+                    value = part
                 else:
-                    value = int(token)
+                    value = int(part)
             self[key] = value

@@ -43,15 +43,15 @@ def _create_lines_iterator(stream: TextIO) -> Iterator[tuple[str, str]]:
             word = _WORD_COMMENT
             tail = line.removeprefix(_COMMENT_LINE_PREFIX)
         else:
-            tokens = re.split(r' +', line, 1)
-            word = tokens[0]
-            tail = tokens[1] if len(tokens) >= 2 else ''
+            parts = re.split(r' +', line, 1)
+            word = parts[0]
+            tail = parts[1] if len(parts) >= 2 else ''
         yield word, tail
 
 
 def _convert_tail_to_ints(tail: str) -> list[int]:
-    tokens = re.split(r' +', tail)
-    values = [int(token) for token in tokens]
+    parts = re.split(r' +', tail)
+    values = [int(part) for part in parts]
     return values
 
 

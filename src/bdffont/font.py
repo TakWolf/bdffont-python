@@ -213,7 +213,7 @@ def _dump_word_str_line(stream: TextIO, word: str, tail: str | None = None):
     if tail is not None:
         tail = tail.strip()
         if tail != '':
-            if len(tail.splitlines()) > 1:
+            if '\n' in tail or '\r' in tail:
                 raise BdfDumpError('tail cannot be multi-line string')
             stream.write(f' {tail}')
     stream.write('\n')
@@ -230,7 +230,7 @@ def _dump_properties_line(stream: TextIO, key: str, value: str | int):
     if isinstance(value, str):
         value = value.replace('"', '""')
         value = f'"{value}"'
-        if len(value.splitlines()) > 1:
+        if '\n' in value or '\r' in value:
             raise BdfDumpError('properties value cannot be multi-line string')
     stream.write(f'{key} {value}\n')
 

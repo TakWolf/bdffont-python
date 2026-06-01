@@ -164,6 +164,9 @@ if __name__ == '__main__':
 - [X11 - Bitmap Distribution Format - Version 2.1](https://www.x.org/docs/BDF/bdf.pdf)
 - [Adobe - Glyph Bitmap Distribution Format (BDF) Specification - Version 2.2](https://adobe-type-tools.github.io/font-tech-notes/pdfs/5005.BDF_Spec.pdf)
 - [X Logical Font Description Conventions - X Consortium Standard](https://www.x.org/releases/current/doc/xorg-docs/xlfd/xlfd.html)
+- [libXfont - X font handling library for server & utilities](https://gitlab.freedesktop.org/xorg/lib/libxfont)
+- [Debian - X Consortium - lib/font/bitmap](https://sources.debian.org/src/tightvnc/1%253A1.3.10-11/Xvnc/lib/font/bitmap)
+- [FreeType font driver for BDF fonts](https://github.com/freetype/freetype/tree/master/src/bdf)
 
 ## License
 

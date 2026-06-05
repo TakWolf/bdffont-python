@@ -198,19 +198,19 @@ def test_properties_7():
 
     with pytest.raises(KeyError) as info:
         properties['abc-def'] = 'abcdef'
-    assert info.value.args[0] == 'contains illegal characters'
+    assert info.value.args[0] == 'key contains illegal characters'
 
     properties['NONE_PARAM'] = None
     assert 'NONE_PARAM' not in properties
 
     with pytest.raises(ValueError) as info:
         properties.foundry = 1
-    assert info.value.args[0] == "expected type 'str', got 'int' instead"
+    assert info.value.args[0] == "value of 'FOUNDRY' must be 'str'"
 
     with pytest.raises(ValueError) as info:
         properties.pixel_size = '1'
-    assert info.value.args[0] == "expected type 'int', got 'str' instead"
+    assert info.value.args[0] == "value of 'PIXEL_SIZE' must be 'int'"
 
     with pytest.raises(ValueError) as info:
         properties['FLOAT_PARAM'] = 1.2
-    assert info.value.args[0] == "expected type 'str | int', got 'float' instead"
+    assert info.value.args[0] == "value must be 'str' or 'int'"

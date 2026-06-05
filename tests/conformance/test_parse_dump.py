@@ -87,7 +87,7 @@ def test_multi_line():
     font.properties['ABC'] = 'Hello\nWorld'
     with pytest.raises(BdfDumpError) as info:
         font.dump_to_string()
-    assert info.value.args[0] == 'properties value cannot be multi-line string'
+    assert info.value.args[0] == 'property value cannot be multi-line string'
 
     font = BdfFont()
     font.properties.comments.append('Hello\nWorld')

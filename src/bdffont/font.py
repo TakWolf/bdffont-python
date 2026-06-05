@@ -53,7 +53,7 @@ def _convert_tail_to_ints(tail: str) -> list[int]:
     return values
 
 
-def _convert_tail_to_properties_value(tail: str) -> str | int:
+def _convert_tail_to_property_value(tail: str) -> str | int:
     if tail.startswith('"') and tail.endswith('"'):
         return tail[1:-1].replace('""', '"')
 
@@ -73,7 +73,7 @@ def _parse_properties_segment(lines: Iterator[tuple[str, str]], count: int) -> B
         elif word == _WORD_COMMENT:
             properties.comments.append(tail)
         else:
-            value = _convert_tail_to_properties_value(tail)
+            value = _convert_tail_to_property_value(tail)
             try:
                 properties[word] = value
             except ValueError:
@@ -227,10 +227,10 @@ def _dump_word_ints_line(stream: TextIO, word: str, *values: int):
     stream.write('\n')
 
 
-def _dump_properties_line(stream: TextIO, key: str, value: str | int):
+def _dump_property_line(stream: TextIO, key: str, value: str | int):
     if isinstance(value, str):
         if '\n' in value or '\r' in value:
-            raise BdfDumpError('properties value cannot be multi-line string')
+            raise BdfDumpError('property value cannot be multi-line string')
         value = value.replace('"', '""')
         value = f'"{value}"'
     else:
@@ -253,7 +253,7 @@ def _dump_stream(stream: TextIO, font: BdfFont):
     for comment in font.properties.comments:
         _dump_word_str_line(stream, _WORD_COMMENT, comment)
     for key, value in font.properties.items():
-        _dump_properties_line(stream, key, value)
+        _dump_property_line(stream, key, value)
     _dump_word_str_line(stream, _WORD_ENDPROPERTIES)
 
     _dump_word_ints_line(stream, _WORD_CHARS, len(font.glyphs))

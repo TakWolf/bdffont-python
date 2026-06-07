@@ -339,9 +339,9 @@ class BdfFont:
         self.point_size = point_size
         self.resolution_x, self.resolution_y = resolution
         self.width, self.height, self.offset_x, self.offset_y = bounding_box
-        self.properties = BdfProperties() if properties is None else properties
-        self.glyphs = [] if glyphs is None else glyphs
-        self.comments = [] if comments is None else comments
+        self.properties = properties if properties is not None else BdfProperties()
+        self.glyphs = glyphs if glyphs is not None else []
+        self.comments = comments if comments is not None else []
 
     def __copy__(self) -> BdfFont:
         return self.copy()

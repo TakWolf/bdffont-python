@@ -63,8 +63,8 @@ class BdfGlyph:
         self.scalable_width_x, self.scalable_width_y = scalable_width
         self.device_width_x, self.device_width_y = device_width
         self.width, self.height, self.offset_x, self.offset_y = bounding_box
-        self.bitmap = [] if bitmap is None else bitmap
-        self.comments = [] if comments is None else comments
+        self.bitmap = bitmap if bitmap is not None else []
+        self.comments = comments if comments is not None else []
 
     def __copy__(self) -> BdfGlyph:
         return self.copy()

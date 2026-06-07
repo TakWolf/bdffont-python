@@ -363,13 +363,14 @@ class BdfProperties(UserDict[str, str | int]):
         self[_KEY_NOTICE] = value
 
     def to_xlfd(self) -> str:
-        parts = ['']
+        parts = []
         for key in _XLFD_KEYS_ORDER:
             value = str(self.get(key, ''))
             if key in _XLFD_STR_VALUE_KEYS:
                 _check_xlfd_str_value(key, value)
+            parts.append('-')
             parts.append(value)
-        return '-'.join(parts)
+        return ''.join(parts)
 
     def update_by_xlfd(self, font_name: str):
         if not font_name.startswith('-'):

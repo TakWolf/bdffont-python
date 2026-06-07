@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Any
 
 
@@ -64,6 +66,12 @@ class BdfGlyph:
         self.bitmap = [] if bitmap is None else bitmap
         self.comments = [] if comments is None else comments
 
+    def __copy__(self) -> BdfGlyph:
+        return self.copy()
+
+    def __deepcopy__(self, memo: dict[int, Any]) -> BdfGlyph:
+        return self.deepcopy()
+
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, BdfGlyph):
             return NotImplemented
@@ -119,3 +127,25 @@ class BdfGlyph:
     @bounding_box.setter
     def bounding_box(self, value: tuple[int, int, int, int]):
         self.width, self.height, self.offset_x, self.offset_y = value
+
+    def copy(self) -> BdfGlyph:
+        return BdfGlyph(
+            self.name,
+            self.encoding,
+            self.scalable_width,
+            self.device_width,
+            self.bounding_box,
+            self.bitmap,
+            self.comments,
+        )
+
+    def deepcopy(self) -> BdfGlyph:
+        return BdfGlyph(
+            self.name,
+            self.encoding,
+            self.scalable_width,
+            self.device_width,
+            self.bounding_box,
+            [bitmap_row.copy() for bitmap_row in self.bitmap],
+            self.comments.copy(),
+        )

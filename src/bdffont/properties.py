@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 from collections import UserDict
 from typing import Any
@@ -155,6 +157,12 @@ class BdfProperties(UserDict[str, str | int]):
         if isinstance(key, str):
             key = key.upper()
         return super().__contains__(key)
+
+    def __copy__(self) -> BdfProperties:
+        return self.copy()
+
+    def __deepcopy__(self, memo: dict[int, Any]) -> BdfProperties:
+        return self.deepcopy()
 
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, BdfProperties):
@@ -379,3 +387,9 @@ class BdfProperties(UserDict[str, str | int]):
                 else:
                     value = int(part)
             self[key] = value
+
+    def copy(self) -> BdfProperties:
+        return BdfProperties(self.data, self.comments)
+
+    def deepcopy(self) -> BdfProperties:
+        return BdfProperties(self.data, self.comments.copy())

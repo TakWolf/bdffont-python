@@ -343,6 +343,12 @@ class BdfFont:
         self.glyphs = [] if glyphs is None else glyphs
         self.comments = [] if comments is None else comments
 
+    def __copy__(self) -> BdfFont:
+        return self.copy()
+
+    def __deepcopy__(self, memo: dict[int, Any]) -> BdfFont:
+        return self.deepcopy()
+
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, BdfFont):
             return NotImplemented
@@ -409,3 +415,25 @@ class BdfFont:
     def save(self, file_path: str | PathLike[str]):
         with open(file_path, 'w', encoding='utf-8', newline='\n') as file:
             self.dump(file)
+
+    def copy(self) -> BdfFont:
+        return BdfFont(
+            self.name,
+            self.point_size,
+            self.resolution,
+            self.bounding_box,
+            self.properties,
+            self.glyphs,
+            self.comments,
+        )
+
+    def deepcopy(self) -> BdfFont:
+        return BdfFont(
+            self.name,
+            self.point_size,
+            self.resolution,
+            self.bounding_box,
+            self.properties.deepcopy(),
+            [glyph.deepcopy() for glyph in self.glyphs],
+            self.comments.copy(),
+        )

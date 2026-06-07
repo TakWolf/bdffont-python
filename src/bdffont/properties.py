@@ -105,16 +105,16 @@ class BdfProperties(UserDict[str, str | int]):
 
     def __init__(
             self,
-            data: dict[str, str | int] | None = None,
+            properties: dict[str, str | int] | None = None,
             comments: list[str] | None = None,
     ):
         """
-        :param data:
+        :param properties:
             The keys and values used for initialization.
         :param comments:
             The comments.
         """
-        super().__init__(data)
+        super().__init__(properties)
         self.comments = [] if comments is None else comments
 
     def __getitem__(self, key: Any) -> str | int:

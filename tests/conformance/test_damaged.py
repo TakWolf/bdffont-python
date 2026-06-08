@@ -6,16 +6,16 @@ from bdffont import BdfFont
 from bdffont.error import BdfParseError, BdfMissingWordError, BdfIllegalWordError, BdfCountError
 
 
-def test_not_a_bdf(assets_dir: Path):
+def test_not_bdf(assets_dir: Path):
     with pytest.raises(BdfIllegalWordError) as info:
-        BdfFont.load(assets_dir.joinpath('damaged', 'not_a_bdf.bdf'))
+        BdfFont.load(assets_dir.joinpath('damaged', 'not_bdf.bdf'))
     assert info.value.word == 'This'
     assert str(info.value) == "illegal word: 'This'"
 
 
-def test_not_support_version(assets_dir: Path):
+def test_unsupported_version(assets_dir: Path):
     with pytest.raises(BdfParseError) as info:
-        BdfFont.load(assets_dir.joinpath('damaged', 'not_support_version.bdf'))
+        BdfFont.load(assets_dir.joinpath('damaged', 'unsupported_version.bdf'))
     assert info.value.args[0] == 'spec version not support: 2.2'
 
 

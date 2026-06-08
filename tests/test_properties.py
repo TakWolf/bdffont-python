@@ -1,3 +1,5 @@
+from copy import copy, deepcopy
+
 import pytest
 
 from bdffont import BdfProperties
@@ -106,6 +108,10 @@ def test_properties_3():
     assert properties.charset_encoding == '1'
     assert properties.to_xlfd() == font_name
 
+
+def test_properties_4():
+    properties = BdfProperties()
+
     font_name = '--------------'
     properties.update_by_xlfd(font_name)
     assert properties.foundry is None
@@ -125,19 +131,23 @@ def test_properties_3():
     assert properties.to_xlfd() == font_name
 
 
-def test_properties_4():
+def test_properties_5():
     properties = BdfProperties()
 
     with pytest.raises(BdfXlfdError) as info:
         properties.update_by_xlfd('Bitstream-Charter-Medium-R-Normal--12-120-75-75-P-68-ISO8859-1')
     assert info.value.args[0] == "not starts with '-'"
 
+
+def test_properties_6():
+    properties = BdfProperties()
+
     with pytest.raises(BdfXlfdError) as info:
         properties.update_by_xlfd('-Bitstream-Charter-Medium-R-Normal--12-120-75-75-P-68-ISO8859-1-')
     assert info.value.args[0] == "must be 14 '-'"
 
 
-def test_properties_5():
+def test_properties_7():
     properties = BdfProperties()
 
     properties.default_char = -1
@@ -171,7 +181,7 @@ def test_properties_5():
     assert len(properties) == 7
 
 
-def test_properties_6():
+def test_properties_8():
     properties = BdfProperties()
 
     properties.font_version = '1.0.0'
@@ -189,19 +199,31 @@ def test_properties_6():
     assert len(properties) == 3
 
 
-def test_properties_7():
+def test_properties_9():
     properties = BdfProperties()
 
     properties['abc'] = 'abc'
     assert properties['ABC'] == 'abc'
     assert properties['abc'] == 'abc'
 
+
+def test_properties_10():
+    properties = BdfProperties()
+
     with pytest.raises(KeyError) as info:
         properties['abc-def'] = 'abcdef'
     assert info.value.args[0] == 'key contains illegal characters'
 
+
+def test_properties_11():
+    properties = BdfProperties()
+
     properties['NONE_PARAM'] = None
     assert 'NONE_PARAM' not in properties
+
+
+def test_properties_12():
+    properties = BdfProperties()
 
     with pytest.raises(ValueError) as info:
         properties.foundry = 1
@@ -212,5 +234,43 @@ def test_properties_7():
     assert info.value.args[0] == "value of 'PIXEL_SIZE' must be 'int'"
 
     with pytest.raises(ValueError) as info:
-        properties['FLOAT_PARAM'] = 1.2
+        properties['FLOAT_VALUE'] = 1.2
     assert info.value.args[0] == "value must be 'str' or 'int'"
+
+
+def test_copy():
+    properties_1 = BdfProperties()
+    properties_1.family_name = 'Demo Font'
+    properties_1.point_size = 100
+    properties_1.comments = ['This is a comment.']
+    properties_2 = copy(properties_1)
+
+    assert properties_1 == properties_2
+    assert properties_1 is not properties_2
+    assert properties_1.comments is properties_2.comments
+
+
+def test_deepcopy():
+    properties_1 = BdfProperties()
+    properties_1.family_name = 'Demo Font'
+    properties_1.point_size = 100
+    properties_1.comments = ['This is a comment.']
+    properties_2 = deepcopy(properties_1)
+
+    assert properties_1 == properties_2
+    assert properties_1 is not properties_2
+    assert properties_1.comments is not properties_2.comments
+
+
+def test_eq():
+    properties_1 = BdfProperties()
+    properties_1.family_name = 'Demo Font'
+    properties_1.point_size = 100
+    properties_1.comments = ['This is a comment.']
+
+    properties_2 = BdfProperties()
+    properties_2.family_name = 'Demo Font'
+    properties_2.point_size = 100
+    properties_2.comments = ['This is a comment.']
+
+    assert properties_1 == properties_1

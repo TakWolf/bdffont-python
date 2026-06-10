@@ -131,10 +131,11 @@ class BdfProperties(UserDict[str, str | int]):
 
         if not isinstance(key, str):
             raise KeyError("key must be 'str'")
-        key = key.upper()
 
         if not _regex_prop_key.match(key):
             raise KeyError('key contains illegal characters')
+
+        key = key.upper()
 
         if key in _STR_VALUE_KEYS:
             if not isinstance(value, str):

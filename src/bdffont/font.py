@@ -30,6 +30,8 @@ _WORD_BITMAP = 'BITMAP'
 
 _COMMENT_LINE_PREFIX = f'{_WORD_COMMENT} '
 
+_HEX_UPPER_CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+
 
 def _create_lines_iterator(stream: TextIO) -> Iterator[tuple[str, str]]:
     for line in stream:
@@ -276,7 +278,8 @@ def _dump_stream(stream: TextIO, font: BdfFont):
                     pixel_index = i + shift
                     pixel = 1 if pixel_index < width_limit and bitmap_row[pixel_index] != 0 else 0
                     b = (b << 1) | pixel
-                stream.write(f'{b:02X}')
+                stream.write(_HEX_UPPER_CHARS[b >> 4])
+                stream.write(_HEX_UPPER_CHARS[b & 0x0F])
             stream.write('\n')
 
         _dump_word_str_line(stream, _WORD_ENDCHAR)

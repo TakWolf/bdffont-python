@@ -269,11 +269,12 @@ def _dump_stream(stream: TextIO, font: BdfFont):
 
         bitmap_width = (glyph.width + 7) // 8 * 8
         for bitmap_row in glyph.bitmap:
+            width_limit = min(len(bitmap_row), glyph.width)
             for i in range(0, bitmap_width, 8):
                 b = 0
                 for shift in range(8):
                     pixel_index = i + shift
-                    pixel = 1 if pixel_index < min(len(bitmap_row), glyph.width) and bitmap_row[pixel_index] != 0 else 0
+                    pixel = 1 if pixel_index < width_limit and bitmap_row[pixel_index] != 0 else 0
                     b = (b << 1) | pixel
                 stream.write(f'{b:02X}')
             stream.write('\n')

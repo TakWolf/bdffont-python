@@ -83,7 +83,7 @@ def _parse_properties_segment(lines: Iterator[tuple[str, str]], count: int) -> B
     raise BdfMissingWordError(_WORD_ENDPROPERTIES)
 
 
-def _parse_bitmap_segment(lines: Iterator[tuple[str, str]], glyph_width: int) -> list[list[int]]:
+def _parse_bitmap_segment(lines: Iterator[tuple[str, str]], glyph_width: int, glyph_height: int) -> list[list[int]]:
     bitmap = []
     for word, _ in lines:
         if word == _WORD_ENDCHAR:
@@ -129,7 +129,7 @@ def _parse_glyph_segment(lines: Iterator[tuple[str, str]], name: str) -> BdfGlyp
             if bounding_box is None:
                 raise BdfMissingWordError(_WORD_BBX)
             if word == _WORD_BITMAP:
-                bitmap = _parse_bitmap_segment(lines, bounding_box[0])
+                bitmap = _parse_bitmap_segment(lines, bounding_box[0], bounding_box[1])
             else:
                 bitmap = None
             return BdfGlyph(

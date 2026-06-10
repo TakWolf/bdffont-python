@@ -230,16 +230,17 @@ def _dump_word_ints_line(stream: TextIO, word: str, *values: int):
 
 
 def _dump_property_line(stream: TextIO, key: str, value: str | int):
+    stream.write(key)
+    stream.write(' ')
     if isinstance(value, str):
         if '\n' in value or '\r' in value:
             raise BdfDumpError('property value cannot be multi-line string')
-        value = value.replace('"', '""')
-        value = f'"{value}"'
+
+        stream.write('"')
+        stream.write(value.replace('"', '""') if '"' in value else value)
+        stream.write('"')
     else:
-        value = str(value)
-    stream.write(key)
-    stream.write(' ')
-    stream.write(value)
+        stream.write(str(value))
     stream.write('\n')
 
 

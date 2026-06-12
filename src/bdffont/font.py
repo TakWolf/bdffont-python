@@ -237,7 +237,7 @@ def _dump_property_line(stream: TextIO, key: str, value: str | int):
             raise BdfDumpError('property value cannot be multi-line string')
 
         stream.write('"')
-        stream.write(value.replace('"', '""') if '"' in value else value)
+        stream.write(value.replace('"', '""'))
         stream.write('"')
     else:
         stream.write(str(value))

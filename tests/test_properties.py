@@ -136,7 +136,7 @@ def test_properties_5():
 
     with pytest.raises(BdfXlfdError) as info:
         properties.update_by_xlfd('Bitstream-Charter-Medium-R-Normal--12-120-75-75-P-68-ISO8859-1')
-    assert info.value.args[0] == "not starts with '-'"
+    assert info.value.args[0] == "must starts with '-'"
 
 
 def test_properties_6():
@@ -144,7 +144,7 @@ def test_properties_6():
 
     with pytest.raises(BdfXlfdError) as info:
         properties.update_by_xlfd('-Bitstream-Charter-Medium-R-Normal--12-120-75-75-P-68-ISO8859-1-')
-    assert info.value.args[0] == "must be 14 '-'"
+    assert info.value.args[0] == 'must contains 14 XLFD fields'
 
 
 def test_properties_7():

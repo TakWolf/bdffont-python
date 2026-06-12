@@ -375,9 +375,9 @@ class BdfProperties(UserDict[str, str | int]):
 
     def update_by_xlfd(self, font_name: str):
         if not font_name.startswith('-'):
-            raise BdfXlfdError("not starts with '-'")
-        if font_name.count('-') != 14:
-            raise BdfXlfdError("must be 14 '-'")
+            raise BdfXlfdError("must starts with '-'")
+        if font_name.count('-') != len(_XLFD_KEYS_ORDER):
+            raise BdfXlfdError(f'must contains {len(_XLFD_KEYS_ORDER)} XLFD fields')
         parts = font_name.removeprefix('-').split('-')
         for key, part in zip(_XLFD_KEYS_ORDER, parts):
             if part == '':

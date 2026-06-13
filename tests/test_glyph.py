@@ -10,6 +10,7 @@ def test_glyph():
     assert glyph.scalable_width == (0, 0)
     assert glyph.device_width == (0, 0)
     assert glyph.bounding_box == (0, 0, 0, 0)
+    assert glyph.attributes == 0
     assert glyph.bitmap == []
     assert glyph.comments == []
 
@@ -48,6 +49,7 @@ def test_copy():
         scalable_width=(1, 2),
         device_width=(3, 4),
         bounding_box=(5, 6, 7, 8),
+        attributes=9,
         bitmap=[[1, 0, 0, 1]],
         comments=['This is a comment.'],
     )
@@ -66,6 +68,7 @@ def test_deepcopy():
         scalable_width=(1, 2),
         device_width=(3, 4),
         bounding_box=(5, 6, 7, 8),
+        attributes=9,
         bitmap=[[1, 0, 0, 1]],
         comments=['This is a comment.'],
     )
@@ -87,6 +90,7 @@ def test_eq():
         scalable_width=(1, 2),
         device_width=(3, 4),
         bounding_box=(5, 6, 7, 8),
+        attributes=9,
         bitmap=[[1, 0, 0, 1]],
         comments=['This is a comment.'],
     )
@@ -96,6 +100,7 @@ def test_eq():
         scalable_width=(1, 2),
         device_width=(3, 4),
         bounding_box=(5, 6, 7, 8),
+        attributes=9,
         bitmap=[[1, 0, 0, 1]],
         comments=['This is a comment.'],
     )

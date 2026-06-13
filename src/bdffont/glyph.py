@@ -14,6 +14,7 @@ class BdfGlyph:
     height: int
     offset_x: int
     offset_y: int
+    attributes: int
     bitmap: list[list[int]]
     comments: list[str]
 
@@ -24,6 +25,7 @@ class BdfGlyph:
             scalable_width: tuple[int, int] = (0, 0),
             device_width: tuple[int, int] = (0, 0),
             bounding_box: tuple[int, int, int, int] = (0, 0, 0, 0),
+            attributes: int = 0,
             bitmap: list[list[int]] | None = None,
             comments: list[str] | None = None,
     ):
@@ -53,6 +55,9 @@ class BdfGlyph:
         :param bounding_box:
             The width in x and height in y of the bitmap in integer pixel values.
             The x and y displacement of the lower left corner from origin of the bitmap in integer pixel values.
+        :param attributes:
+            The attributes as 4 hex-encoded characters.
+            The interpretation of these attributes is undefined in this document.
         :param bitmap:
             The bitmap of the glyph.
         :param comments:
@@ -63,6 +68,7 @@ class BdfGlyph:
         self.scalable_width_x, self.scalable_width_y = scalable_width
         self.device_width_x, self.device_width_y = device_width
         self.width, self.height, self.offset_x, self.offset_y = bounding_box
+        self.attributes = attributes
         self.bitmap = bitmap if bitmap is not None else []
         self.comments = comments if comments is not None else []
 
@@ -85,6 +91,7 @@ class BdfGlyph:
                 self.height == other.height and
                 self.offset_x == other.offset_x and
                 self.offset_y == other.offset_y and
+                self.attributes == other.attributes and
                 self.bitmap == other.bitmap and
                 self.comments == other.comments)
 
@@ -135,6 +142,7 @@ class BdfGlyph:
             self.scalable_width,
             self.device_width,
             self.bounding_box,
+            self.attributes,
             self.bitmap,
             self.comments,
         )
@@ -146,6 +154,7 @@ class BdfGlyph:
             self.scalable_width,
             self.device_width,
             self.bounding_box,
+            self.attributes,
             [bitmap_row.copy() for bitmap_row in self.bitmap],
             self.comments.copy(),
         )

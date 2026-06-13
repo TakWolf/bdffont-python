@@ -26,6 +26,7 @@ _WORD_ENCODING = 'ENCODING'
 _WORD_SWIDTH = 'SWIDTH'
 _WORD_DWIDTH = 'DWIDTH'
 _WORD_BBX = 'BBX'
+_WORD_ATTRIBUTES = 'ATTRIBUTES'
 _WORD_BITMAP = 'BITMAP'
 
 _COMMENT_LINE_PREFIX = f'{_WORD_COMMENT} '
@@ -104,6 +105,7 @@ def _parse_glyph_segment(lines: Iterator[tuple[str, str]], name: str) -> BdfGlyp
     scalable_width = None
     device_width = None
     bounding_box = None
+    attributes = None
     comments = []
     for word, tail in lines:
         if word == _WORD_ENCODING:
@@ -117,6 +119,8 @@ def _parse_glyph_segment(lines: Iterator[tuple[str, str]], name: str) -> BdfGlyp
         elif word == _WORD_BBX:
             values = _convert_tail_to_ints(tail)
             bounding_box = values[0], values[1], values[2], values[3]
+        elif word == _WORD_ATTRIBUTES:
+            attributes = int(tail, 16)
         elif word == _WORD_COMMENT:
             comments.append(tail)
         elif word == _WORD_BITMAP or word == _WORD_ENDCHAR:
@@ -128,6 +132,8 @@ def _parse_glyph_segment(lines: Iterator[tuple[str, str]], name: str) -> BdfGlyp
                 raise BdfMissingWordError(_WORD_DWIDTH)
             if bounding_box is None:
                 raise BdfMissingWordError(_WORD_BBX)
+            if attributes is None:
+                attributes = 0
             if word == _WORD_BITMAP:
                 bitmap = _parse_bitmap_segment(lines, bounding_box[0], bounding_box[1])
             else:
@@ -138,6 +144,7 @@ def _parse_glyph_segment(lines: Iterator[tuple[str, str]], name: str) -> BdfGlyp
                 scalable_width,
                 device_width,
                 bounding_box,
+                attributes,
                 bitmap,
                 comments,
             )
@@ -268,6 +275,8 @@ def _dump_stream(stream: TextIO, font: BdfFont):
         _dump_word_ints_line(stream, _WORD_SWIDTH, glyph.scalable_width_x, glyph.scalable_width_y)
         _dump_word_ints_line(stream, _WORD_DWIDTH, glyph.device_width_x, glyph.device_width_y)
         _dump_word_ints_line(stream, _WORD_BBX, glyph.width, glyph.height, glyph.offset_x, glyph.offset_y)
+        if glyph.attributes != 0:
+            _dump_word_str_line(stream, _WORD_ATTRIBUTES, f'{glyph.attributes:04X}')
         _dump_word_str_line(stream, _WORD_BITMAP)
 
         bitmap_width = (glyph.width + 7) // 8 * 8

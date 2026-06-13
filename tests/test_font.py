@@ -149,6 +149,7 @@ def test_demo(assets_dir: Path):
     assert glyph.offset_y == 12
     assert glyph.offset == (2, 12)
     assert glyph.bounding_box == (4, 6, 2, 12)
+    assert glyph.attributes == 0b_0000000111000000
     assert glyph.bitmap == [
         [0, 1, 1, 1],
         [0, 1, 1, 1],

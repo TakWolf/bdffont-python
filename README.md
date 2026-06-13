@@ -161,7 +161,7 @@ if __name__ == '__main__':
 
 ## References
 
-- [X11 - Bitmap Distribution Format - Version 2.1](https://www.x.org/docs/BDF/bdf.pdf)
+- [X11 - Bitmap Distribution Format - Version 2.1](https://xorg.freedesktop.org/archive/X11R7.0/doc/PDF/bdf.pdf)
 - [Adobe - Glyph Bitmap Distribution Format (BDF) Specification - Version 2.2](https://adobe-type-tools.github.io/font-tech-notes/pdfs/5005.BDF_Spec.pdf)
 - [X Logical Font Description Conventions - X Consortium Standard](https://www.x.org/releases/current/doc/xorg-docs/xlfd/xlfd.html)
 - [libXfont - X font handling library for server & utilities](https://gitlab.freedesktop.org/xorg/lib/libxfont)

@@ -97,9 +97,8 @@ _regex_xlfd_value = re.compile(r'[-?*,"]')
 
 
 def _check_xlfd_str_value(key: str, value: str):
-    matched = _regex_xlfd_value.search(value)
-    if matched is not None:
-        raise ValueError(f'value of {key!r} contains illegal characters {matched.group()!r}')
+    if _regex_xlfd_value.search(value) is not None:
+        raise ValueError(f'value of {key!r} contain illegal characters')
 
 
 class BdfProperties(UserDict[str, str | int]):
@@ -133,7 +132,7 @@ class BdfProperties(UserDict[str, str | int]):
             raise KeyError("key must be 'str'")
 
         if not _regex_prop_key.match(key):
-            raise KeyError('key contains illegal characters')
+            raise KeyError('key contain illegal characters')
 
         key = key.upper()
 
@@ -375,9 +374,9 @@ class BdfProperties(UserDict[str, str | int]):
 
     def update_by_xlfd(self, font_name: str):
         if not font_name.startswith('-'):
-            raise BdfXlfdError("must starts with '-'")
+            raise BdfXlfdError("must start with '-'")
         if font_name.count('-') != len(_XLFD_KEYS_ORDER):
-            raise BdfXlfdError(f'must contains {len(_XLFD_KEYS_ORDER)} XLFD fields')
+            raise BdfXlfdError(f'must contain {len(_XLFD_KEYS_ORDER)} XLFD fields')
         parts = font_name.removeprefix('-').split('-')
         for key, part in zip(_XLFD_KEYS_ORDER, parts):
             if part == '':

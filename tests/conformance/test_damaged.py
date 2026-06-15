@@ -16,7 +16,7 @@ def test_not_bdf(assets_dir: Path):
 def test_unsupported_version(assets_dir: Path):
     with pytest.raises(BdfParseError) as info:
         BdfFont.load(assets_dir.joinpath('damaged', 'unsupported_version.bdf'))
-    assert info.value.args[0] == 'spec version not support: 2.2'
+    assert info.value.args[0] == "unsupported BDF version: '2.2'"
 
 
 def test_no_line_font(assets_dir: Path):

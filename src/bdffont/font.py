@@ -210,7 +210,7 @@ def _parse_stream(stream: TextIO) -> BdfFont:
     for word, tail in lines:
         if word == _WORD_STARTFONT:
             if tail != _SPEC_VERSION:
-                raise BdfParseError(f'spec version not support: {tail}')
+                raise BdfParseError(f'unsupported BDF version: {tail!r}')
             return _parse_font_segment(lines)
         else:
             raise BdfIllegalWordError(word)

@@ -65,7 +65,7 @@ def test_font_3():
 
     with pytest.raises(BdfXlfdError) as info:
         font.update_by_name_as_xlfd()
-    assert info.value.args[0] == "must starts with '-'"
+    assert info.value.args[0] == "must start with '-'"
 
     font.name = '--------------'
     font.update_by_name_as_xlfd()

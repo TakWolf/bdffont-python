@@ -1,7 +1,7 @@
 [project]
 name = "bdffont"
 version = "0.0.40"
-description = "A library for manipulating Glyph Bitmap Distribution Format (BDF) Fonts"
+description = "A library for handling Glyph Bitmap Distribution Format (BDF) Fonts"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]

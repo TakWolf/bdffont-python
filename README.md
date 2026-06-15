@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/python-3.10-brightgreen?style=flat-square)](https://www.python.org)
 [![PyPI](https://img.shields.io/pypi/v/bdffont?style=flat-square)](https://pypi.org/project/bdffont/)
 
-BdfFont is a library for manipulating [Glyph Bitmap Distribution Format (BDF) Fonts](https://en.wikipedia.org/wiki/Glyph_Bitmap_Distribution_Format).
+A library for handling [Glyph Bitmap Distribution Format (BDF) Fonts](https://en.wikipedia.org/wiki/Glyph_Bitmap_Distribution_Format).
 
 ## Installation
 

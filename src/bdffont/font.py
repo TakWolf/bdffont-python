@@ -68,6 +68,7 @@ def _convert_tail_to_property_value(tail: str) -> str | int:
 
 def _parse_properties_segment(lines: Iterator[tuple[str, str]], count: int) -> BdfProperties:
     properties = BdfProperties()
+
     for word, tail in lines:
         if word == _WORD_ENDPROPERTIES:
             if len(properties) != count:
@@ -86,6 +87,7 @@ def _parse_properties_segment(lines: Iterator[tuple[str, str]], count: int) -> B
 
 def _parse_bitmap_segment(lines: Iterator[tuple[str, str]], glyph_width: int, glyph_height: int) -> list[list[int]]:
     bitmap = []
+
     for word, _ in lines:
         if word == _WORD_ENDCHAR:
             return bitmap
@@ -107,6 +109,7 @@ def _parse_glyph_segment(lines: Iterator[tuple[str, str]], name: str) -> BdfGlyp
     bounding_box = None
     attributes = None
     comments = []
+
     for word, tail in lines:
         if word == _WORD_ENCODING:
             encoding = int(tail)
@@ -162,6 +165,7 @@ def _parse_font_segment(lines: Iterator[tuple[str, str]]) -> BdfFont:
     glyphs_count = None
     glyphs = []
     comments = []
+
     for word, tail in lines:
         if word == _WORD_FONT:
             name = tail

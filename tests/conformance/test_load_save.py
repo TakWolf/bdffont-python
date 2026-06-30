@@ -11,7 +11,7 @@ from bdffont import BdfFont
         ('misaki', 'misaki_gothic.bdf'),
         ('misaki', 'misaki_gothic_2nd.bdf'),
         ('misaki', 'misaki_mincho.bdf'),
-        ('unifont', 'unifont-17.0.04.bdf'),
+        ('unifont', 'unifont-17.0.05.bdf'),
     ],
 )
 def test_load_save(assets_dir: Path, tmp_path: Path, font_dir: str, font_file_name: str):

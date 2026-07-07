@@ -164,7 +164,7 @@ class BdfProperties(UserDict[str, str | int]):
     def __deepcopy__(self, memo: dict[int, Any]) -> BdfProperties:
         return self.deepcopy()
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, BdfProperties):
             return NotImplemented
         return (self.comments == other.comments and

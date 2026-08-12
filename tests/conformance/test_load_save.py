@@ -6,7 +6,8 @@ from bdffont import BdfFont
 
 
 @pytest.mark.parametrize(
-    'font_dir, font_file_name', [
+    ('font_dir', 'font_file_name'),
+    [
         ('demo', 'demo.bdf'),
         ('misaki', 'misaki_gothic.bdf'),
         ('misaki', 'misaki_gothic_2nd.bdf'),

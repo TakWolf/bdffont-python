@@ -37,7 +37,7 @@ def main() -> None:
 
     font.glyphs.append(BdfGlyph(
         name='.notdef',
-        encoding=-1,
+        encoding=0xFFFE,
         scalable_width=(500, 0),
         device_width=(8, 0),
         bounding_box=(8, 16, 0, -2),
@@ -62,8 +62,8 @@ def main() -> None:
     ))
 
     font.glyphs.append(BdfGlyph(
-        name='CAP_LETTER_A',
-        encoding=65,
+        name='LATIN_CAPITAL_LETTER_A',
+        encoding=0x0041,
         scalable_width=(500, 0),
         device_width=(8, 0),
         bounding_box=(8, 16, 0, -2),
@@ -103,7 +103,7 @@ def main() -> None:
     font.properties.charset_encoding = '1'
     font.generate_name_as_xlfd()
 
-    font.properties.default_char = -1
+    font.properties.default_char = 0xFFFE
     font.properties.font_ascent = 14
     font.properties.font_descent = 2
     font.properties.x_height = 7

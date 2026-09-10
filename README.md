@@ -20,11 +20,11 @@ import shutil
 import statistics
 
 from bdffont import BdfFont, BdfGlyph
-from examples import build_dir
+from examples import BUILD_DIR
 
 
 def main():
-    outputs_dir = build_dir.joinpath('create')
+    outputs_dir = BUILD_DIR.joinpath('create')
     if outputs_dir.exists():
         shutil.rmtree(outputs_dir)
     outputs_dir.mkdir(parents=True)
@@ -127,16 +127,16 @@ if __name__ == '__main__':
 import shutil
 
 from bdffont import BdfFont
-from examples import assets_dir, build_dir
+from examples import ASSETS_DIR, BUILD_DIR
 
 
 def main():
-    outputs_dir = build_dir.joinpath('load')
+    outputs_dir = BUILD_DIR.joinpath('load')
     if outputs_dir.exists():
         shutil.rmtree(outputs_dir)
     outputs_dir.mkdir(parents=True)
 
-    font = BdfFont.load(assets_dir.joinpath('unifont', 'unifont-17.0.05.bdf'))
+    font = BdfFont.load(ASSETS_DIR.joinpath('unifont', 'unifont-17.0.05.bdf'))
     print(f'name: {font.name}')
     print(f'size: {font.point_size}')
     print(f'ascent: {font.properties.font_ascent}')

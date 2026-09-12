@@ -10,7 +10,7 @@ class BdfParseError(BdfError):
 class BdfMissingWordError(BdfParseError):
     word: str
 
-    def __init__(self, word: str):
+    def __init__(self, word: str) -> None:
         self.word = word
 
     def __str__(self) -> str:
@@ -20,7 +20,7 @@ class BdfMissingWordError(BdfParseError):
 class BdfIllegalWordError(BdfParseError):
     word: str
 
-    def __init__(self, word: str):
+    def __init__(self, word: str) -> None:
         self.word = word
 
     def __str__(self) -> str:
@@ -32,7 +32,7 @@ class BdfCountError(BdfParseError):
     expected: int
     actual: int
 
-    def __init__(self, word: str, expected: int, actual: int):
+    def __init__(self, word: str, expected: int, actual: int) -> None:
         self.word = word
         self.expected = expected
         self.actual = actual

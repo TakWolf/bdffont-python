@@ -8,7 +8,7 @@ from bdffont import BdfFont, BdfGlyph
 from bdffont.error import BdfXlfdError, BdfDumpError
 
 
-def test_font_1():
+def test_font_1() -> None:
     font = BdfFont()
 
     font.resolution = 1, 2
@@ -35,7 +35,7 @@ def test_font_1():
     assert font.offset_y == 10
 
 
-def test_font_2():
+def test_font_2() -> None:
     font = BdfFont()
 
     font.point_size = 16
@@ -60,7 +60,7 @@ def test_font_2():
     assert font.name == '-TakWolf Studio-Demo Pixel-Medium-R-Normal-Sans Serif-16-160-75-75-P-80-ISO10646-1'
 
 
-def test_font_3():
+def test_font_3() -> None:
     font = BdfFont()
 
     with pytest.raises(BdfXlfdError) as info:
@@ -93,7 +93,7 @@ def test_font_3():
     assert font.properties.charset_encoding == '1'
 
 
-def test_demo(assets_dir: Path):
+def test_demo(assets_dir: Path) -> None:
     font = BdfFont.load(assets_dir.joinpath('demo', 'demo.bdf'))
 
     assert font.name == '-Adobe-Helvetica-Bold-R-Normal--24-240-75-75-P-65-ISO8859-1'
@@ -161,7 +161,7 @@ def test_demo(assets_dir: Path):
     assert glyph.comments == ['This is a comment in char.']
 
 
-def test_multi_line_1():
+def test_multi_line_1() -> None:
     font = BdfFont()
     font.comments.append('Hello\nWorld')
     with pytest.raises(BdfDumpError) as info:
@@ -169,7 +169,7 @@ def test_multi_line_1():
     assert info.value.args[0] == 'tail cannot be multi-line string'
 
 
-def test_multi_line_2():
+def test_multi_line_2() -> None:
     font = BdfFont()
     font.properties['ABC'] = 'Hello\nWorld'
     with pytest.raises(BdfDumpError) as info:
@@ -177,7 +177,7 @@ def test_multi_line_2():
     assert info.value.args[0] == 'property value cannot be multi-line string'
 
 
-def test_multi_line_3():
+def test_multi_line_3() -> None:
     font = BdfFont()
     font.properties.comments.append('Hello\nWorld')
     with pytest.raises(BdfDumpError) as info:
@@ -185,7 +185,7 @@ def test_multi_line_3():
     assert info.value.args[0] == 'tail cannot be multi-line string'
 
 
-def test_multi_line_4():
+def test_multi_line_4() -> None:
     font = BdfFont()
     font.glyphs.append(BdfGlyph(
         name='A',
@@ -197,7 +197,7 @@ def test_multi_line_4():
     assert info.value.args[0] == 'tail cannot be multi-line string'
 
 
-def test_parse_bitmap_1():
+def test_parse_bitmap_1() -> None:
     font = BdfFont.parse(textwrap.dedent('''\
         STARTFONT 2.1
         FONT
@@ -221,7 +221,7 @@ def test_parse_bitmap_1():
     ]
 
 
-def test_parse_bitmap_2():
+def test_parse_bitmap_2() -> None:
     font = BdfFont.parse(textwrap.dedent('''\
         STARTFONT 2.1
         FONT
@@ -245,7 +245,7 @@ def test_parse_bitmap_2():
     ]
 
 
-def test_dump_bitmap_1():
+def test_dump_bitmap_1() -> None:
     font = BdfFont()
     font.glyphs.append(BdfGlyph(
         name='_',
@@ -275,7 +275,7 @@ def test_dump_bitmap_1():
     ''')
 
 
-def test_dump_bitmap_2():
+def test_dump_bitmap_2() -> None:
     font = BdfFont()
     font.glyphs.append(BdfGlyph(
         name='_',
@@ -305,7 +305,7 @@ def test_dump_bitmap_2():
     ''')
 
 
-def test_copy(assets_dir: Path):
+def test_copy(assets_dir: Path) -> None:
     font_1 = BdfFont.load(assets_dir.joinpath('demo', 'demo.bdf'))
     font_2 = copy(font_1)
 
@@ -316,7 +316,7 @@ def test_copy(assets_dir: Path):
     assert font_1.comments is font_2.comments
 
 
-def test_deepcopy(assets_dir: Path):
+def test_deepcopy(assets_dir: Path) -> None:
     font_1 = BdfFont.load(assets_dir.joinpath('demo', 'demo.bdf'))
     font_2 = deepcopy(font_1)
 
@@ -330,7 +330,7 @@ def test_deepcopy(assets_dir: Path):
         assert glyph_1 is not glyph_2
 
 
-def test_eq(assets_dir: Path):
+def test_eq(assets_dir: Path) -> None:
     file_path = assets_dir.joinpath('demo', 'demo.bdf')
     font_1 = BdfFont.load(file_path)
     font_2 = BdfFont.load(file_path)

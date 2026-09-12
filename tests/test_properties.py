@@ -6,7 +6,7 @@ from bdffont import BdfProperties
 from bdffont.error import BdfXlfdError
 
 
-def test_properties_1():
+def test_properties_1() -> None:
     properties = BdfProperties({
         'PARAM_1': 1,
         'param_2': '2',
@@ -24,7 +24,7 @@ def test_properties_1():
     assert properties.comments[1] == 'This is a comment, too.'
 
 
-def test_properties_2():
+def test_properties_2() -> None:
     properties = BdfProperties()
 
     properties.foundry = 'TakWolf Studio'
@@ -87,7 +87,7 @@ def test_properties_2():
     assert properties.to_xlfd() == '-TakWolf Studio-Demo Pixel-Medium-R-Normal-Sans Serif-16-160-75-240-M-85-ISO8859-1'
 
 
-def test_properties_3():
+def test_properties_3() -> None:
     properties = BdfProperties()
 
     font_name = '-Bitstream-Charter-Medium-R-Normal--12-120-75-75-P-68-ISO8859-1'
@@ -109,7 +109,7 @@ def test_properties_3():
     assert properties.to_xlfd() == font_name
 
 
-def test_properties_4():
+def test_properties_4() -> None:
     properties = BdfProperties()
 
     font_name = '--------------'
@@ -131,7 +131,7 @@ def test_properties_4():
     assert properties.to_xlfd() == font_name
 
 
-def test_properties_5():
+def test_properties_5() -> None:
     properties = BdfProperties()
 
     with pytest.raises(BdfXlfdError) as info:
@@ -139,7 +139,7 @@ def test_properties_5():
     assert info.value.args[0] == "must start with '-'"
 
 
-def test_properties_6():
+def test_properties_6() -> None:
     properties = BdfProperties()
 
     with pytest.raises(BdfXlfdError) as info:
@@ -147,7 +147,7 @@ def test_properties_6():
     assert info.value.args[0] == 'must contain 14 XLFD fields'
 
 
-def test_properties_7():
+def test_properties_7() -> None:
     properties = BdfProperties()
 
     properties.default_char = -1
@@ -181,7 +181,7 @@ def test_properties_7():
     assert len(properties) == 7
 
 
-def test_properties_8():
+def test_properties_8() -> None:
     properties = BdfProperties()
 
     properties.font_version = '1.0.0'
@@ -199,7 +199,7 @@ def test_properties_8():
     assert len(properties) == 3
 
 
-def test_properties_9():
+def test_properties_9() -> None:
     properties = BdfProperties()
 
     properties['abc'] = 'abc'
@@ -207,7 +207,7 @@ def test_properties_9():
     assert properties['abc'] == 'abc'
 
 
-def test_properties_10():
+def test_properties_10() -> None:
     properties = BdfProperties()
 
     with pytest.raises(KeyError) as info:
@@ -215,14 +215,14 @@ def test_properties_10():
     assert info.value.args[0] == 'key contain illegal characters'
 
 
-def test_properties_11():
+def test_properties_11() -> None:
     properties = BdfProperties()
 
     properties['NONE_PARAM'] = None
     assert 'NONE_PARAM' not in properties
 
 
-def test_properties_12():
+def test_properties_12() -> None:
     properties = BdfProperties()
 
     with pytest.raises(ValueError) as info:
@@ -238,7 +238,7 @@ def test_properties_12():
     assert info.value.args[0] == "value must be 'str' or 'int'"
 
 
-def test_copy():
+def test_copy() -> None:
     properties_1 = BdfProperties()
     properties_1.family_name = 'Demo Font'
     properties_1.point_size = 100
@@ -250,7 +250,7 @@ def test_copy():
     assert properties_1.comments is properties_2.comments
 
 
-def test_deepcopy():
+def test_deepcopy() -> None:
     properties_1 = BdfProperties()
     properties_1.family_name = 'Demo Font'
     properties_1.point_size = 100
@@ -262,7 +262,7 @@ def test_deepcopy():
     assert properties_1.comments is not properties_2.comments
 
 
-def test_eq():
+def test_eq() -> None:
     properties_1 = BdfProperties()
     properties_1.family_name = 'Demo Font'
     properties_1.point_size = 100

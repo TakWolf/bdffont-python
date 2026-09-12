@@ -221,7 +221,7 @@ def _parse_stream(stream: TextIO) -> BdfFont:
     raise BdfMissingWordError(_WORD_STARTFONT)
 
 
-def _dump_word_str_line(stream: TextIO, word: str, tail: str | None = None):
+def _dump_word_str_line(stream: TextIO, word: str, tail: str | None = None) -> None:
     stream.write(word)
     if tail is not None:
         tail = tail.strip()
@@ -233,14 +233,14 @@ def _dump_word_str_line(stream: TextIO, word: str, tail: str | None = None):
     stream.write('\n')
 
 
-def _dump_word_ints_line(stream: TextIO, word: str, *values: int):
+def _dump_word_ints_line(stream: TextIO, word: str, *values: int) -> None:
     stream.write(word)
     for value in values:
         stream.write(f' {value}')
     stream.write('\n')
 
 
-def _dump_property_line(stream: TextIO, key: str, value: str | int):
+def _dump_property_line(stream: TextIO, key: str, value: str | int) -> None:
     stream.write(key)
     stream.write(' ')
     if isinstance(value, str):
@@ -255,7 +255,7 @@ def _dump_property_line(stream: TextIO, key: str, value: str | int):
     stream.write('\n')
 
 
-def _dump_stream(stream: TextIO, font: BdfFont):
+def _dump_stream(stream: TextIO, font: BdfFont) -> None:
     _dump_word_str_line(stream, _WORD_STARTFONT, _SPEC_VERSION)
     for comment in font.comments:
         _dump_word_str_line(stream, _WORD_COMMENT, comment)
@@ -334,7 +334,7 @@ class BdfFont:
             properties: BdfProperties | None = None,
             glyphs: list[BdfGlyph] | None = None,
             comments: list[str] | None = None,
-    ):
+    ) -> None:
         """
         :param name:
             The font name. Should match the PostScript language FontName in the corresponding outline font program,
@@ -387,7 +387,7 @@ class BdfFont:
         return self.resolution_x, self.resolution_y
 
     @resolution.setter
-    def resolution(self, value: tuple[int, int]):
+    def resolution(self, value: tuple[int, int]) -> None:
         self.resolution_x, self.resolution_y = value
 
     @property
@@ -395,7 +395,7 @@ class BdfFont:
         return self.width, self.height
 
     @dimensions.setter
-    def dimensions(self, value: tuple[int, int]):
+    def dimensions(self, value: tuple[int, int]) -> None:
         self.width, self.height = value
 
     @property
@@ -403,7 +403,7 @@ class BdfFont:
         return self.offset_x, self.offset_y
 
     @offset.setter
-    def offset(self, value: tuple[int, int]):
+    def offset(self, value: tuple[int, int]) -> None:
         self.offset_x, self.offset_y = value
 
     @property
@@ -411,18 +411,18 @@ class BdfFont:
         return self.width, self.height, self.offset_x, self.offset_y
 
     @bounding_box.setter
-    def bounding_box(self, value: tuple[int, int, int, int]):
+    def bounding_box(self, value: tuple[int, int, int, int]) -> None:
         self.width, self.height, self.offset_x, self.offset_y = value
 
-    def generate_name_as_xlfd(self):
+    def generate_name_as_xlfd(self) -> None:
         self.name = self.properties.to_xlfd()
 
-    def update_by_name_as_xlfd(self):
+    def update_by_name_as_xlfd(self) -> None:
         self.properties.update_by_xlfd(self.name)
         self.resolution_x = self.properties.resolution_x or 0
         self.resolution_y = self.properties.resolution_y or 0
 
-    def dump(self, stream: TextIO):
+    def dump(self, stream: TextIO) -> None:
         _dump_stream(stream, self)
 
     def dump_to_string(self) -> str:
@@ -430,7 +430,7 @@ class BdfFont:
         self.dump(stream)
         return stream.getvalue()
 
-    def save(self, file_path: str | PathLike[str]):
+    def save(self, file_path: str | PathLike[str]) -> None:
         with open(file_path, 'w', encoding='utf-8', newline='\n') as file:
             self.dump(file)
 

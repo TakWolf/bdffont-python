@@ -96,7 +96,7 @@ _REGEX_PROP_KEY = re.compile(r'^[a-zA-Z0-9_]*$')
 _REGEX_XLFD_VALUE = re.compile(r'[-?*,"]')
 
 
-def _check_xlfd_str_value(key: str, value: str):
+def _check_xlfd_str_value(key: str, value: str) -> None:
     if _REGEX_XLFD_VALUE.search(value) is not None:
         raise ValueError(f'value of {key!r} contain illegal characters')
 
@@ -108,7 +108,7 @@ class BdfProperties(UserDict[str, str | int]):
             self,
             properties: dict[str, str | int] | None = None,
             comments: list[str] | None = None,
-    ):
+    ) -> None:
         """
         :param properties:
             The keys and values used for initialization.
@@ -123,7 +123,7 @@ class BdfProperties(UserDict[str, str | int]):
             key = key.upper()
         return super().__getitem__(key)
 
-    def __setitem__(self, key: Any, value: Any):
+    def __setitem__(self, key: Any, value: Any) -> None:
         if value is None:
             self.pop(key, None)
             return
@@ -148,7 +148,7 @@ class BdfProperties(UserDict[str, str | int]):
 
         super().__setitem__(key, value)
 
-    def __delitem__(self, key: Any):
+    def __delitem__(self, key: Any) -> None:
         if isinstance(key, str):
             key = key.upper()
         super().__delitem__(key)
@@ -175,7 +175,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_FOUNDRY, None)
 
     @foundry.setter
-    def foundry(self, value: str | None):
+    def foundry(self, value: str | None) -> None:
         self[_KEY_FOUNDRY] = value
 
     @property
@@ -183,7 +183,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_FAMILY_NAME, None)
 
     @family_name.setter
-    def family_name(self, value: str | None):
+    def family_name(self, value: str | None) -> None:
         self[_KEY_FAMILY_NAME] = value
 
     @property
@@ -191,7 +191,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_WEIGHT_NAME, None)
 
     @weight_name.setter
-    def weight_name(self, value: str | None):
+    def weight_name(self, value: str | None) -> None:
         self[_KEY_WEIGHT_NAME] = value
 
     @property
@@ -199,7 +199,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_SLANT, None)
 
     @slant.setter
-    def slant(self, value: str | None):
+    def slant(self, value: str | None) -> None:
         self[_KEY_SLANT] = value
 
     @property
@@ -207,7 +207,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_SETWIDTH_NAME, None)
 
     @setwidth_name.setter
-    def setwidth_name(self, value: str | None):
+    def setwidth_name(self, value: str | None) -> None:
         self[_KEY_SETWIDTH_NAME] = value
 
     @property
@@ -215,7 +215,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_ADD_STYLE_NAME, None)
 
     @add_style_name.setter
-    def add_style_name(self, value: str | None):
+    def add_style_name(self, value: str | None) -> None:
         self[_KEY_ADD_STYLE_NAME] = value
 
     @property
@@ -223,7 +223,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_PIXEL_SIZE, None)
 
     @pixel_size.setter
-    def pixel_size(self, value: int | None):
+    def pixel_size(self, value: int | None) -> None:
         self[_KEY_PIXEL_SIZE] = value
 
     @property
@@ -231,7 +231,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_POINT_SIZE, None)
 
     @point_size.setter
-    def point_size(self, value: int | None):
+    def point_size(self, value: int | None) -> None:
         self[_KEY_POINT_SIZE] = value
 
     @property
@@ -239,7 +239,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_RESOLUTION_X, None)
 
     @resolution_x.setter
-    def resolution_x(self, value: int | None):
+    def resolution_x(self, value: int | None) -> None:
         self[_KEY_RESOLUTION_X] = value
 
     @property
@@ -247,7 +247,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_RESOLUTION_Y, None)
 
     @resolution_y.setter
-    def resolution_y(self, value: int | None):
+    def resolution_y(self, value: int | None) -> None:
         self[_KEY_RESOLUTION_Y] = value
 
     @property
@@ -255,7 +255,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_SPACING, None)
 
     @spacing.setter
-    def spacing(self, value: str | None):
+    def spacing(self, value: str | None) -> None:
         self[_KEY_SPACING] = value
 
     @property
@@ -263,7 +263,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_AVERAGE_WIDTH, None)
 
     @average_width.setter
-    def average_width(self, value: int | None):
+    def average_width(self, value: int | None) -> None:
         self[_KEY_AVERAGE_WIDTH] = value
 
     @property
@@ -271,7 +271,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_CHARSET_REGISTRY, None)
 
     @charset_registry.setter
-    def charset_registry(self, value: str | None):
+    def charset_registry(self, value: str | None) -> None:
         self[_KEY_CHARSET_REGISTRY] = value
 
     @property
@@ -279,7 +279,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_CHARSET_ENCODING, None)
 
     @charset_encoding.setter
-    def charset_encoding(self, value: str | None):
+    def charset_encoding(self, value: str | None) -> None:
         self[_KEY_CHARSET_ENCODING] = value
 
     @property
@@ -287,7 +287,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_DEFAULT_CHAR, None)
 
     @default_char.setter
-    def default_char(self, value: int | None):
+    def default_char(self, value: int | None) -> None:
         self[_KEY_DEFAULT_CHAR] = value
 
     @property
@@ -295,7 +295,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_FONT_ASCENT, None)
 
     @font_ascent.setter
-    def font_ascent(self, value: int | None):
+    def font_ascent(self, value: int | None) -> None:
         self[_KEY_FONT_ASCENT] = value
 
     @property
@@ -303,7 +303,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_FONT_DESCENT, None)
 
     @font_descent.setter
-    def font_descent(self, value: int | None):
+    def font_descent(self, value: int | None) -> None:
         self[_KEY_FONT_DESCENT] = value
 
     @property
@@ -311,7 +311,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_X_HEIGHT, None)
 
     @x_height.setter
-    def x_height(self, value: int | None):
+    def x_height(self, value: int | None) -> None:
         self[_KEY_X_HEIGHT] = value
 
     @property
@@ -319,7 +319,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_CAP_HEIGHT, None)
 
     @cap_height.setter
-    def cap_height(self, value: int | None):
+    def cap_height(self, value: int | None) -> None:
         self[_KEY_CAP_HEIGHT] = value
 
     @property
@@ -327,7 +327,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_UNDERLINE_POSITION, None)
 
     @underline_position.setter
-    def underline_position(self, value: int | None):
+    def underline_position(self, value: int | None) -> None:
         self[_KEY_UNDERLINE_POSITION] = value
 
     @property
@@ -335,7 +335,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_UNDERLINE_THICKNESS, None)
 
     @underline_thickness.setter
-    def underline_thickness(self, value: int | None):
+    def underline_thickness(self, value: int | None) -> None:
         self[_KEY_UNDERLINE_THICKNESS] = value
 
     @property
@@ -343,7 +343,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_FONT_VERSION, None)
 
     @font_version.setter
-    def font_version(self, value: str | None):
+    def font_version(self, value: str | None) -> None:
         self[_KEY_FONT_VERSION] = value
 
     @property
@@ -351,7 +351,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_COPYRIGHT, None)
 
     @copyright.setter
-    def copyright(self, value: str | None):
+    def copyright(self, value: str | None) -> None:
         self[_KEY_COPYRIGHT] = value
 
     @property
@@ -359,7 +359,7 @@ class BdfProperties(UserDict[str, str | int]):
         return self.get(_KEY_NOTICE, None)
 
     @notice.setter
-    def notice(self, value: str | None):
+    def notice(self, value: str | None) -> None:
         self[_KEY_NOTICE] = value
 
     def to_xlfd(self) -> str:
@@ -372,7 +372,7 @@ class BdfProperties(UserDict[str, str | int]):
             parts.append(value)
         return ''.join(parts)
 
-    def update_by_xlfd(self, font_name: str):
+    def update_by_xlfd(self, font_name: str) -> None:
         if not font_name.startswith('-'):
             raise BdfXlfdError("must start with '-'")
         if font_name.count('-') != len(_XLFD_KEYS_ORDER):

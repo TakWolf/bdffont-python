@@ -23,7 +23,7 @@ from bdffont import BdfFont, BdfGlyph
 from examples import BUILD_DIR
 
 
-def main():
+def main() -> None:
     outputs_dir = BUILD_DIR.joinpath('create')
     if outputs_dir.exists():
         shutil.rmtree(outputs_dir)
@@ -130,7 +130,7 @@ from bdffont import BdfFont
 from examples import ASSETS_DIR, BUILD_DIR
 
 
-def main():
+def main() -> None:
     outputs_dir = BUILD_DIR.joinpath('load')
     if outputs_dir.exists():
         shutil.rmtree(outputs_dir)

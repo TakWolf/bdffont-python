@@ -28,7 +28,7 @@ class BdfGlyph:
             attributes: int = 0,
             bitmap: list[list[int]] | None = None,
             comments: list[str] | None = None,
-    ):
+    ) -> None:
         """
         :param name:
             The name for the glyph, limited to a string of 14 characters. In base fonts, this should correspond to
@@ -100,7 +100,7 @@ class BdfGlyph:
         return self.scalable_width_x, self.scalable_width_y
 
     @scalable_width.setter
-    def scalable_width(self, value: tuple[int, int]):
+    def scalable_width(self, value: tuple[int, int]) -> None:
         self.scalable_width_x, self.scalable_width_y = value
 
     @property
@@ -108,7 +108,7 @@ class BdfGlyph:
         return self.device_width_x, self.device_width_y
 
     @device_width.setter
-    def device_width(self, value: tuple[int, int]):
+    def device_width(self, value: tuple[int, int]) -> None:
         self.device_width_x, self.device_width_y = value
 
     @property
@@ -116,7 +116,7 @@ class BdfGlyph:
         return self.width, self.height
 
     @dimensions.setter
-    def dimensions(self, value: tuple[int, int]):
+    def dimensions(self, value: tuple[int, int]) -> None:
         self.width, self.height = value
 
     @property
@@ -124,7 +124,7 @@ class BdfGlyph:
         return self.offset_x, self.offset_y
 
     @offset.setter
-    def offset(self, value: tuple[int, int]):
+    def offset(self, value: tuple[int, int]) -> None:
         self.offset_x, self.offset_y = value
 
     @property
@@ -132,7 +132,7 @@ class BdfGlyph:
         return self.width, self.height, self.offset_x, self.offset_y
 
     @bounding_box.setter
-    def bounding_box(self, value: tuple[int, int, int, int]):
+    def bounding_box(self, value: tuple[int, int, int, int]) -> None:
         self.width, self.height, self.offset_x, self.offset_y = value
 
     def copy(self) -> BdfGlyph:

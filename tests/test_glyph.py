@@ -3,7 +3,7 @@ from copy import copy, deepcopy
 from bdffont import BdfGlyph
 
 
-def test_glyph():
+def test_glyph() -> None:
     glyph = BdfGlyph(name='A', encoding=65)
     assert glyph.name == 'A'
     assert glyph.encoding == 65
@@ -42,7 +42,7 @@ def test_glyph():
     assert glyph.offset_y == 12
 
 
-def test_copy():
+def test_copy() -> None:
     glyph_1 = BdfGlyph(
         name='A',
         encoding=65,
@@ -61,7 +61,7 @@ def test_copy():
     assert glyph_1.comments is glyph_2.comments
 
 
-def test_deepcopy():
+def test_deepcopy() -> None:
     glyph_1 = BdfGlyph(
         name='A',
         encoding=65,
@@ -83,7 +83,7 @@ def test_deepcopy():
         assert bitmap_row_1 is not bitmap_row_2
 
 
-def test_eq():
+def test_eq() -> None:
     glyph_1 = BdfGlyph(
         name='A',
         encoding=65,

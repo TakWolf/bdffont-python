@@ -1,3 +1,4 @@
+import re
 from copy import copy, deepcopy
 
 import pytest
@@ -134,17 +135,15 @@ def test_properties_4() -> None:
 def test_properties_5() -> None:
     properties = BdfProperties()
 
-    with pytest.raises(BdfXlfdError) as info:
+    with pytest.raises(BdfXlfdError, match=re.escape("must start with '-'")):
         properties.update_by_xlfd('Bitstream-Charter-Medium-R-Normal--12-120-75-75-P-68-ISO8859-1')
-    assert info.value.args[0] == "must start with '-'"
 
 
 def test_properties_6() -> None:
     properties = BdfProperties()
 
-    with pytest.raises(BdfXlfdError) as info:
+    with pytest.raises(BdfXlfdError, match=re.escape('must contain 14 XLFD fields')):
         properties.update_by_xlfd('-Bitstream-Charter-Medium-R-Normal--12-120-75-75-P-68-ISO8859-1-')
-    assert info.value.args[0] == 'must contain 14 XLFD fields'
 
 
 def test_properties_7() -> None:
@@ -210,9 +209,8 @@ def test_properties_9() -> None:
 def test_properties_10() -> None:
     properties = BdfProperties()
 
-    with pytest.raises(KeyError) as info:
+    with pytest.raises(KeyError, match=re.escape('key contain illegal characters')):
         properties['abc-def'] = 'abcdef'
-    assert info.value.args[0] == 'key contain illegal characters'
 
 
 def test_properties_11() -> None:
@@ -225,17 +223,14 @@ def test_properties_11() -> None:
 def test_properties_12() -> None:
     properties = BdfProperties()
 
-    with pytest.raises(ValueError) as info:
+    with pytest.raises(ValueError, match=re.escape("value of 'FOUNDRY' must be 'str'")):
         properties.foundry = 1
-    assert info.value.args[0] == "value of 'FOUNDRY' must be 'str'"
 
-    with pytest.raises(ValueError) as info:
+    with pytest.raises(ValueError, match=re.escape("value of 'PIXEL_SIZE' must be 'int'")):
         properties.pixel_size = '1'
-    assert info.value.args[0] == "value of 'PIXEL_SIZE' must be 'int'"
 
-    with pytest.raises(ValueError) as info:
+    with pytest.raises(ValueError, match=re.escape("value must be 'str' or 'int'")):
         properties['FLOAT_VALUE'] = 1.2
-    assert info.value.args[0] == "value must be 'str' or 'int'"
 
 
 def test_copy() -> None:

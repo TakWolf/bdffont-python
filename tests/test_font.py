@@ -1,3 +1,4 @@
+import re
 import textwrap
 from copy import copy, deepcopy
 from pathlib import Path
@@ -63,9 +64,8 @@ def test_font_2() -> None:
 def test_font_3() -> None:
     font = BdfFont()
 
-    with pytest.raises(BdfXlfdError) as info:
+    with pytest.raises(BdfXlfdError, match=re.escape("must start with '-'")):
         font.update_by_name_as_xlfd()
-    assert info.value.args[0] == "must start with '-'"
 
     font.name = '--------------'
     font.update_by_name_as_xlfd()
@@ -164,25 +164,22 @@ def test_demo(assets_dir: Path) -> None:
 def test_multi_line_1() -> None:
     font = BdfFont()
     font.comments.append('Hello\nWorld')
-    with pytest.raises(BdfDumpError) as info:
+    with pytest.raises(BdfDumpError, match=re.escape('tail cannot be multi-line string')):
         font.dump_to_string()
-    assert info.value.args[0] == 'tail cannot be multi-line string'
 
 
 def test_multi_line_2() -> None:
     font = BdfFont()
     font.properties['ABC'] = 'Hello\nWorld'
-    with pytest.raises(BdfDumpError) as info:
+    with pytest.raises(BdfDumpError, match=re.escape('property value cannot be multi-line string')):
         font.dump_to_string()
-    assert info.value.args[0] == 'property value cannot be multi-line string'
 
 
 def test_multi_line_3() -> None:
     font = BdfFont()
     font.properties.comments.append('Hello\nWorld')
-    with pytest.raises(BdfDumpError) as info:
+    with pytest.raises(BdfDumpError, match=re.escape('tail cannot be multi-line string')):
         font.dump_to_string()
-    assert info.value.args[0] == 'tail cannot be multi-line string'
 
 
 def test_multi_line_4() -> None:
@@ -192,9 +189,8 @@ def test_multi_line_4() -> None:
         encoding=65,
         comments=['Hello\nWorld'],
     ))
-    with pytest.raises(BdfDumpError) as info:
+    with pytest.raises(BdfDumpError, match=re.escape('tail cannot be multi-line string')):
         font.dump_to_string()
-    assert info.value.args[0] == 'tail cannot be multi-line string'
 
 
 def test_parse_bitmap_1() -> None:

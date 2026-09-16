@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from collections import UserDict
+from collections.abc import Mapping
 from typing import Any
 
 from bdffont.error import BdfXlfdError
@@ -106,7 +107,7 @@ class BdfProperties(UserDict[str, str | int]):
 
     def __init__(
             self,
-            properties: dict[str, str | int] | None = None,
+            properties: Mapping[str, str | int] | None = None,
             comments: list[str] | None = None,
     ) -> None:
         """

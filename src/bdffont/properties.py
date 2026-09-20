@@ -76,7 +76,7 @@ _XLFD_STR_VALUE_KEYS = {
     _KEY_CHARSET_ENCODING,
 }
 
-_XLFD_KEYS_ORDER = [
+_XLFD_KEY_ORDER = [
     _KEY_FOUNDRY,
     _KEY_FAMILY_NAME,
     _KEY_WEIGHT_NAME,
@@ -365,7 +365,7 @@ class BdfProperties(UserDict[str, str | int]):
 
     def to_xlfd(self) -> str:
         parts = []
-        for key in _XLFD_KEYS_ORDER:
+        for key in _XLFD_KEY_ORDER:
             value = str(self.get(key, ''))
             if key in _XLFD_STR_VALUE_KEYS:
                 _check_xlfd_str_value(key, value)
@@ -376,11 +376,11 @@ class BdfProperties(UserDict[str, str | int]):
     def update_by_xlfd(self, font_name: str) -> None:
         if not font_name.startswith('-'):
             raise BdfXlfdError("must start with '-'")
-        if font_name.count('-') != len(_XLFD_KEYS_ORDER):
-            raise BdfXlfdError(f'must contain {len(_XLFD_KEYS_ORDER)} XLFD fields')
+        if font_name.count('-') != len(_XLFD_KEY_ORDER):
+            raise BdfXlfdError(f'must contain {len(_XLFD_KEY_ORDER)} XLFD fields')
 
         parts = font_name.removeprefix('-').split('-')
-        for key, part in zip(_XLFD_KEYS_ORDER, parts):
+        for key, part in zip(_XLFD_KEY_ORDER, parts):
             if part == '':
                 value = None
             else:

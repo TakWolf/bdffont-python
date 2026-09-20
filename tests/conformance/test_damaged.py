@@ -95,13 +95,13 @@ def test_illegal_word_in_char(assets_dir: Path) -> None:
     assert info.value.word == 'DEF'
 
 
-def test_incorrect_properties_count(assets_dir: Path) -> None:
+def test_incorrect_property_count(assets_dir: Path) -> None:
     with pytest.raises(BdfCountError, match=re.escape("the count of 'STARTPROPERTIES' is incorrect: 1000 -> 19")) as info:
-        BdfFont.load(assets_dir.joinpath('damaged', 'incorrect_properties_count.bdf'))
+        BdfFont.load(assets_dir.joinpath('damaged', 'incorrect_property_count.bdf'))
     assert info.value.word == 'STARTPROPERTIES'
 
 
-def test_incorrect_chars_count(assets_dir: Path) -> None:
+def test_incorrect_char_count(assets_dir: Path) -> None:
     with pytest.raises(BdfCountError, match=re.escape("the count of 'CHARS' is incorrect: 1000 -> 2")) as info:
-        BdfFont.load(assets_dir.joinpath('damaged', 'incorrect_chars_count.bdf'))
+        BdfFont.load(assets_dir.joinpath('damaged', 'incorrect_char_count.bdf'))
     assert info.value.word == 'CHARS'

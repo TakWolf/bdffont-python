@@ -162,7 +162,7 @@ def _parse_font_segment(lines: Iterator[tuple[str, str]]) -> BdfFont:
     resolution = None
     bounding_box = None
     properties = None
-    glyphs_count = None
+    glyph_count = None
     glyphs = []
     comments = []
 
@@ -179,7 +179,7 @@ def _parse_font_segment(lines: Iterator[tuple[str, str]]) -> BdfFont:
         elif word == _WORD_STARTPROPERTIES:
             properties = _parse_properties_segment(lines, int(tail))
         elif word == _WORD_CHARS:
-            glyphs_count = int(tail)
+            glyph_count = int(tail)
         elif word == _WORD_STARTCHAR:
             glyphs.append(_parse_glyph_segment(lines, tail))
         elif word == _WORD_COMMENT:
@@ -191,10 +191,10 @@ def _parse_font_segment(lines: Iterator[tuple[str, str]]) -> BdfFont:
                 raise BdfMissingWordError(_WORD_SIZE)
             if bounding_box is None:
                 raise BdfMissingWordError(_WORD_FONTBOUNDINGBOX)
-            if glyphs_count is None:
+            if glyph_count is None:
                 raise BdfMissingWordError(_WORD_CHARS)
-            if len(glyphs) != glyphs_count:
-                raise BdfCountError(_WORD_CHARS, glyphs_count, len(glyphs))
+            if len(glyphs) != glyph_count:
+                raise BdfCountError(_WORD_CHARS, glyph_count, len(glyphs))
             return BdfFont(
                 name,
                 point_size,

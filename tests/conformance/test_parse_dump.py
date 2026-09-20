@@ -12,7 +12,7 @@ from bdffont import BdfFont
         ('misaki', 'misaki_gothic.bdf'),
         ('misaki', 'misaki_gothic_2nd.bdf'),
         ('misaki', 'misaki_mincho.bdf'),
-        ('unifont', 'unifont-17.0.05.bdf'),
+        ('unifont', 'unifont-18.0.01.bdf'),
     ],
 )
 def test_parse_dump(assets_dir: Path, font_dir: str, font_file_name: str) -> None:

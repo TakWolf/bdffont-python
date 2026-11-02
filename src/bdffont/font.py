@@ -37,7 +37,7 @@ _HEX_UPPER_CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 
 def _create_lines_iterator(stream: TextIO) -> Iterator[tuple[str, str]]:
     for line in stream:
         line = line.strip()
-        if line == '':
+        if not line:
             continue
 
         if line.startswith(_COMMENT_LINE_PREFIX):
@@ -225,7 +225,7 @@ def _dump_word_str_line(stream: TextIO, word: str, tail: str | None = None) -> N
     stream.write(word)
     if tail is not None:
         tail = tail.strip()
-        if tail != '':
+        if tail:
             if '\n' in tail or '\r' in tail:
                 raise BdfDumpError('tail cannot be multi-line string')
             stream.write(' ')

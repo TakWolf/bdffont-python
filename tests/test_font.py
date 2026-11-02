@@ -71,7 +71,7 @@ def test_font_3() -> None:
     font.update_by_name_as_xlfd()
     assert font.resolution_x == 0
     assert font.resolution_y == 0
-    assert len(font.properties) == 0
+    assert not font.properties
 
     font.name = '-Adobe-Times-Medium-R-Normal--14-100-100-100-P-74-ISO8859-1'
     font.update_by_name_as_xlfd()

@@ -381,7 +381,7 @@ class BdfProperties(UserDict[str, str | int]):
 
         parts = font_name.removeprefix('-').split('-')
         for key, part in zip(_XLFD_KEY_ORDER, parts):
-            if part == '':
+            if not part:
                 value = None
             else:
                 if key in _XLFD_STR_VALUE_KEYS:

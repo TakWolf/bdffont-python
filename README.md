@@ -87,7 +87,7 @@ def main() -> None:
         ],
     ))
 
-    font.properties.foundry = 'Pixel Font Studio'
+    font.properties.foundry = 'TakWolf'
     font.properties.family_name = 'My Font'
     font.properties.weight_name = 'Medium'
     font.properties.slant = 'R'

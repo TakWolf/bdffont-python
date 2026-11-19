@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import copy, deepcopy
 from typing import Any
 
 
@@ -73,10 +74,28 @@ class BdfGlyph:
         self.comments = comments if comments is not None else []
 
     def __copy__(self) -> BdfGlyph:
-        return self.copy()
+        return BdfGlyph(
+            self.name,
+            self.encoding,
+            self.scalable_width,
+            self.device_width,
+            self.bounding_box,
+            self.attributes,
+            self.bitmap,
+            self.comments,
+        )
 
     def __deepcopy__(self, memo: dict[int, Any]) -> BdfGlyph:
-        return self.deepcopy()
+        return BdfGlyph(
+            self.name,
+            self.encoding,
+            self.scalable_width,
+            self.device_width,
+            self.bounding_box,
+            self.attributes,
+            [bitmap_row.copy() for bitmap_row in self.bitmap],
+            self.comments.copy(),
+        )
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, BdfGlyph):
@@ -136,25 +155,7 @@ class BdfGlyph:
         self.width, self.height, self.offset_x, self.offset_y = value
 
     def copy(self) -> BdfGlyph:
-        return BdfGlyph(
-            self.name,
-            self.encoding,
-            self.scalable_width,
-            self.device_width,
-            self.bounding_box,
-            self.attributes,
-            self.bitmap,
-            self.comments,
-        )
+        return copy(self)
 
     def deepcopy(self) -> BdfGlyph:
-        return BdfGlyph(
-            self.name,
-            self.encoding,
-            self.scalable_width,
-            self.device_width,
-            self.bounding_box,
-            self.attributes,
-            [bitmap_row.copy() for bitmap_row in self.bitmap],
-            self.comments.copy(),
-        )
+        return deepcopy(self)

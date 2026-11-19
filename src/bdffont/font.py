@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
+from copy import copy, deepcopy
 from io import StringIO
 from os import PathLike
 from typing import Any, TextIO
@@ -362,10 +363,26 @@ class BdfFont:
         self.comments = comments if comments is not None else []
 
     def __copy__(self) -> BdfFont:
-        return self.copy()
+        return BdfFont(
+            self.name,
+            self.point_size,
+            self.resolution,
+            self.bounding_box,
+            self.properties,
+            self.glyphs,
+            self.comments,
+        )
 
     def __deepcopy__(self, memo: dict[int, Any]) -> BdfFont:
-        return self.deepcopy()
+        return BdfFont(
+            self.name,
+            self.point_size,
+            self.resolution,
+            self.bounding_box,
+            self.properties.deepcopy(),
+            [glyph.deepcopy() for glyph in self.glyphs],
+            self.comments.copy(),
+        )
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, BdfFont):
@@ -435,23 +452,7 @@ class BdfFont:
             self.dump(file)
 
     def copy(self) -> BdfFont:
-        return BdfFont(
-            self.name,
-            self.point_size,
-            self.resolution,
-            self.bounding_box,
-            self.properties,
-            self.glyphs,
-            self.comments,
-        )
+        return copy(self)
 
     def deepcopy(self) -> BdfFont:
-        return BdfFont(
-            self.name,
-            self.point_size,
-            self.resolution,
-            self.bounding_box,
-            self.properties.deepcopy(),
-            [glyph.deepcopy() for glyph in self.glyphs],
-            self.comments.copy(),
-        )
+        return deepcopy(self)

@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from collections import UserDict
 from collections.abc import Mapping
+from copy import copy, deepcopy
 from typing import Any
 
 from bdffont.error import BdfXlfdError
@@ -160,10 +161,10 @@ class BdfProperties(UserDict[str, str | int]):
         return super().__contains__(key)
 
     def __copy__(self) -> BdfProperties:
-        return self.copy()
+        return BdfProperties(self.data, self.comments)
 
     def __deepcopy__(self, memo: dict[int, Any]) -> BdfProperties:
-        return self.deepcopy()
+        return BdfProperties(self.data, self.comments.copy())
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, BdfProperties):
@@ -392,7 +393,7 @@ class BdfProperties(UserDict[str, str | int]):
             self[key] = value
 
     def copy(self) -> BdfProperties:
-        return BdfProperties(self.data, self.comments)
+        return copy(self)
 
     def deepcopy(self) -> BdfProperties:
-        return BdfProperties(self.data, self.comments.copy())
+        return deepcopy(self)
